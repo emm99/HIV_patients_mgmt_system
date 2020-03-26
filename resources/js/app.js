@@ -1,27 +1,23 @@
 require('./bootstrap');
 
-window.Vue = required('vue');
+window.Vue = require('vue');  //**important
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 
 Vue.use(Vuetify)
 
+import User from './Helpers/User'
+window.User=User
+User.id()
+Vue.component('AppHome',require('./components/AppHome.vue').default);
+
+import router from './Router/router.js'
+
+const vuetify = new Vuetify();
 
 const app= new Vue({
-    el: '#app'
-//     icons: {
-//         iconfont: 'md', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4'
-//     },
-//     theme: {
-//         dark: false,
-//     },
-//     themes: {
-//         light: {
-//             primary: "#4682b4",
-//             secondary: "#b0bec5",
-//             accent: "#8c9eff",
-//             error: "#b71c1c",
-//         },
-//     },
-// }
-});
+    el: '#app',
+    vuetify,
+    router
+}
+);
