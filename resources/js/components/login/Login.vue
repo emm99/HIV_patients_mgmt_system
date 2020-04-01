@@ -1,20 +1,29 @@
 <template>
+     <v-row
+          align="center"
+          justify="center"
+        >
+ <v-col
+            cols="12"
+            sm="8"
+            md="4"
+          >
   <v-card
-      class="mx-auto"
+      class="mx-auto elevation-12"
       max-width="700"
       style="margin-top: -64px;"
     >
       <v-toolbar flat>
           <v-spacer></v-spacer>
-        <v-toolbar-title class="red--text text-center"> HIV PATIENTS MANAGEMENT SYSTEM</v-toolbar-title>
+        <v-toolbar-title class="blue--text text-center"> HIV PATIENTS MANAGEMENT SYSTEM</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
-
+<!--
 
         <v-btn icon>
-          <v-icon>mdi-account-lock</v-icon>
-        </v-btn>
+          <v-icon>mdi-file-account</v-icon>
+        </v-btn> -->
       </v-toolbar>
 
       <v-divider></v-divider>
@@ -27,6 +36,7 @@
       v-model="form.email"
       label="E-mail"
       type="email"
+      prepend-icon="mdi-account"
       required
     ></v-text-field>
 
@@ -34,6 +44,7 @@
       v-model="form.password"
       label="Password"
       type="password"
+      prepend-icon="mdi-lock"
       required
     ></v-text-field>
 
@@ -47,6 +58,8 @@
   </v-form>
   </v-container>
     </v-card>
+ </v-col>
+     </v-row>
 </template>
 <script>
 export default {
@@ -61,6 +74,7 @@ export default {
     methods:{
         login(){
       User.login(this.form)
+      this.$router.push('/main');
         }
     }
 }

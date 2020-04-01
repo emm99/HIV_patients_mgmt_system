@@ -1,7 +1,6 @@
 <template>
 <div>
-  <toolbar></toolbar>
-  <login></login>
+  <router-view></router-view>
   <vfooter></vfooter>
 </div>
 </template>
@@ -9,10 +8,9 @@
 <script>
  import toolbar from './Toolbar'
  import vfooter from './Footer'
- import login from './login/Login'
 
 export default {
-  components:{toolbar,vfooter,login}
+  components:{vfooter}
 }
 </script>
 

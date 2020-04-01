@@ -3,11 +3,14 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-import Login from '../components/login/Login'
+import Login from '../components/Toolbar'
+import Main from '../components/Main/main'
 
 const routes = [
-     { path: '/login', components: Login }
-]
+ { path: '/', component: Login },
+ { path: '/main' , component: Main , name: 'main'}
+
+];
 
 const router = new VueRouter({
     routes,

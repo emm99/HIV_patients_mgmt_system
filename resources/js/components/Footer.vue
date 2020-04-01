@@ -1,7 +1,8 @@
 <template>
   <v-footer
-    color="red"
+    color="primary"
     padless
+    absolute
   >
     <v-row
       justify="center"
@@ -9,7 +10,7 @@
     >
 
       <v-col
-        class="red py-4 text-center white--text"
+        class="primary py-4 text-center white--text"
         cols="12"
       >
         {{ new Date().getFullYear() }} — <strong>DIT-OD17COE</strong>

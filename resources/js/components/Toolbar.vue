@@ -1,19 +1,26 @@
 <template>
-  <v-card flat>
+<div>
+  <v-card
+   flat
+   >
     <v-toolbar
-      color="red"
+      color=primary
       dark
       extended
       flat
     >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+
     </v-toolbar>
 
   </v-card>
+  <login></login>
+  </div>
 </template>
 
 <script>
+ import login from './login/Login'
 export default {
+  components:{login}
 
 }
 </script>
