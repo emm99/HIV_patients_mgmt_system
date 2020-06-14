@@ -2035,6 +2035,69 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     source: String
@@ -2049,6 +2112,34 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         title: 'Logout',
         to: '/logout'
+      }],
+      patients: [{
+        title: 'View Patients',
+        icon: 'mdi-seat-individual-suite'
+      }, {
+        title: 'Add New Patient',
+        icon: 'mdi-account-plus'
+      }, {
+        title: 'Patient Notifications',
+        icon: 'mdi-bell-ring'
+      }],
+      reports: [{
+        title: 'Reports',
+        icon: 'mdi-chart-bar'
+      }],
+      staffs: [{
+        title: 'View Staffs',
+        icon: 'mdi-account-tie'
+      }, {
+        title: 'Add New Staff',
+        icon: 'mdi-account-plus'
+      }],
+      charts: [{
+        title: 'View Chats',
+        icon: 'mdi-message-bulleted'
+      }, {
+        title: 'create chart',
+        icon: 'mdi-message-draw'
       }]
     };
   },
@@ -22887,47 +22978,156 @@ var render = function() {
         [
           _c(
             "v-list",
-            { attrs: { dense: "" } },
             [
               _c(
-                "v-list-item",
-                { attrs: { link: "" } },
+                "v-list-group",
+                {
+                  attrs: {
+                    color: "warning",
+                    dark: "",
+                    "prepend-icon": "mdi-stethoscope",
+                    "no-action": ""
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "activator",
+                      fn: function() {
+                        return [_c("v-list-item-title", [_vm._v("Patients")])]
+                      },
+                      proxy: true
+                    }
+                  ])
+                },
                 [
-                  _c(
-                    "v-list-item-action",
-                    [_c("v-icon", [_vm._v("mdi-home")])],
-                    1
-                  ),
                   _vm._v(" "),
-                  _c(
-                    "v-list-item-content",
-                    [_c("v-list-item-title", [_vm._v("Users")])],
-                    1
-                  )
+                  _vm._l(_vm.patients, function(patient, index) {
+                    return _c(
+                      "v-list-item",
+                      { key: index, on: { click: function($event) {} } },
+                      [
+                        _c("v-list-item-title", [
+                          _vm._v(_vm._s(patient.title))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "v-list-item-icon",
+                          [_c("v-icon", [_vm._v(_vm._s(patient.icon))])],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  })
                 ],
-                1
+                2
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.reports, function(report, index) {
+                return _c(
+                  "v-list-item",
+                  {
+                    key: index,
+                    attrs: { color: "warning" },
+                    on: { click: function($event) {} }
+                  },
+                  [
+                    _c(
+                      "v-list-item-icon",
+                      [_c("v-icon", [_vm._v(_vm._s(report.icon))])],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("v-list-item-title", [_vm._v(_vm._s(report.title))])
+                  ],
+                  1
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "v-list-group",
+                {
+                  attrs: {
+                    color: "warning",
+                    dark: "",
+                    "prepend-icon": "mdi-account-group",
+                    "no-action": ""
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "activator",
+                      fn: function() {
+                        return [_c("v-list-item-title", [_vm._v("Staffs")])]
+                      },
+                      proxy: true
+                    }
+                  ])
+                },
+                [
+                  _vm._v(" "),
+                  _vm._l(_vm.staffs, function(staff, index) {
+                    return _c(
+                      "v-list-item",
+                      { key: index, on: { click: function($event) {} } },
+                      [
+                        _c("v-list-item-title", [_vm._v(_vm._s(staff.title))]),
+                        _vm._v(" "),
+                        _c(
+                          "v-list-item-icon",
+                          [_c("v-icon", [_vm._v(_vm._s(staff.icon))])],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  })
+                ],
+                2
               ),
               _vm._v(" "),
               _c(
-                "v-list-item",
-                { attrs: { link: "" } },
+                "v-list-group",
+                {
+                  attrs: {
+                    color: "warning",
+                    dark: "",
+                    "prepend-icon": "mdi-bulletin-board",
+                    "no-action": ""
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "activator",
+                      fn: function() {
+                        return [
+                          _c("v-list-item-title", [_vm._v("Notice Board")])
+                        ]
+                      },
+                      proxy: true
+                    }
+                  ])
+                },
                 [
-                  _c(
-                    "v-list-item-action",
-                    [_c("v-icon", [_vm._v("mdi-contact-mail")])],
-                    1
-                  ),
                   _vm._v(" "),
-                  _c(
-                    "v-list-item-content",
-                    [_c("v-list-item-title", [_vm._v("Create Users")])],
-                    1
-                  )
+                  _vm._l(_vm.charts, function(chart, index) {
+                    return _c(
+                      "v-list-item",
+                      { key: index, on: { click: function($event) {} } },
+                      [
+                        _c("v-list-item-title", [_vm._v(_vm._s(chart.title))]),
+                        _vm._v(" "),
+                        _c(
+                          "v-list-item-icon",
+                          [_c("v-icon", [_vm._v(_vm._s(chart.icon))])],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  })
                 ],
-                1
+                2
               )
             ],
-            1
+            2
           )
         ],
         1

@@ -3,27 +3,90 @@
 <div>
     <v-navigation-drawer
       v-model="drawer"
-      app
-    >
-      <v-list dense>
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Users</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-contact-mail</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Create Users</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+      app>
+      <v-list>
+          <v-list-group
+           color="warning"
+          dark
+          prepend-icon="mdi-stethoscope"
+          no-action
+          >
+           <template v-slot:activator>
+             <v-list-item-title>Patients</v-list-item-title>
+            </template>
+
+             <v-list-item
+            v-for="(patient, index) in patients"
+            :key="index"
+             @click=""
+              >
+            <v-list-item-title>{{patient.title}}</v-list-item-title>
+            <v-list-item-icon>
+              <v-icon>{{patient.icon}}</v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+          </v-list-group>
+
+         <v-list-item
+          color="warning"
+            v-for="(report, index) in reports"
+            :key="index"
+             @click=""
+              >
+              <v-list-item-icon>
+              <v-icon>{{report.icon}}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>{{report.title}}</v-list-item-title>
+         </v-list-item>
+
+         <v-list-group
+          color="warning"
+          dark
+          prepend-icon="mdi-account-group"
+          no-action
+          >
+           <template v-slot:activator>
+             <v-list-item-title>Staffs</v-list-item-title>
+            </template>
+
+             <v-list-item
+            v-for="(staff, index) in staffs"
+            :key="index"
+             @click=""
+              >
+            <v-list-item-title>{{staff.title}}</v-list-item-title>
+             <v-list-item-icon>
+              <v-icon>{{staff.icon}}</v-icon>
+             </v-list-item-icon>
+           </v-list-item>
+          </v-list-group>
+
+           <v-list-group
+            color="warning"
+          dark
+          prepend-icon="mdi-bulletin-board"
+          no-action
+          >
+           <template v-slot:activator>
+             <v-list-item-title>Notice Board</v-list-item-title>
+            </template>
+
+             <v-list-item
+            v-for="(chart, index) in charts"
+            :key="index"
+             @click=""
+              >
+            <v-list-item-title>{{chart.title}}</v-list-item-title>
+            <v-list-item-icon>
+              <v-icon>{{chart.icon}}</v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+          </v-list-group>
       </v-list>
+
     </v-navigation-drawer>
+
+
 
     <v-app-bar
       app
@@ -74,7 +137,24 @@ export default {
       items: [
         { title: 'Profile', to:'/users/{id}' },
         { title: 'Logout',to:'/logout' },
+      ],
+      patients: [
+        {title:'View Patients',icon:'mdi-seat-individual-suite'},
+        {title:'Add New Patient',icon:'mdi-account-plus'},
+        {title:'Patient Notifications',icon:'mdi-bell-ring'}
+      ],
+      reports: [
+          {title:'Reports',icon:'mdi-chart-bar' }
+      ],
+      staffs: [
+          {title:'View Staffs',icon:'mdi-account-tie'},
+          {title:'Add New Staff',icon:'mdi-account-plus'}
+      ],
+      charts: [
+          {title:'View Chats',icon:'mdi-message-bulleted'},
+          {title:'create chart',icon:'mdi-message-draw'}
       ]
+
     }),
     created(){
       EventBus.$on('logout', () => {
