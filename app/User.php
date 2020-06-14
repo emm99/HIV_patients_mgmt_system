@@ -38,6 +38,38 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    public function roles(){
+        return $this->belongsToMany(Roles::class,'users_roles');
+    }
+
+    public function hasRole(...$roles){
+        return $this->roles()->whereIn('slug',$roles)->count();
+     }
+
+    public function hasPermissionTo(...$permissions){
+         return $this->permissions()->whereIn('slug',$permissions)->count() ||
+         $this->roles()->whereHas('permissions',function ($q) use ($permissions) {
+             $q->whereIn('slug',$permissions);
+         })->count();
+     }
+
+    public function givePermissionsTo(...$permissions){
+       $this->permissions()->attach($permissions);
+    }
+
+    public function setPermissionsTo(...$permissions){
+        $this->permissions()->sync($permissions);
+     }
+
+     public function detachPermissionsTo(...$permissions){
+        $this->permissions()->detach($permissions);
+     }
+
+    public function permissions(){
+        return $this->belongsToMany(Permission::class,'users_permissions');
+    }
+
+
       // Rest omitted for brevity
 
     /**

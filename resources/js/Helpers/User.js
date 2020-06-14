@@ -1,5 +1,7 @@
 import Token from './Token';
 import AppStorage from './AppStorage';
+
+
 class User {
      login(data){
         axios.post('/api/auth/login',data)
@@ -12,6 +14,7 @@ class User {
        const username = res.data.user
        if(Token.isValid(access_token)){
           AppStorage.store(username,access_token)
+          window.location = '/#/main'
        }
      }
 
@@ -29,6 +32,7 @@ class User {
 
     logout(){
         AppStorage.clear()
+        window.location = '/'
     }
 
     name(){

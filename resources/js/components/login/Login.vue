@@ -71,14 +71,23 @@ export default {
             }
         }
     },
-    methods:{
-        login(){
-      User.login(this.form)
-      this.$router.push('/main');
+    created(){
+        if(User.loggedIn()){
+
+       this.$router.push({name:'main'})
         }
+
+},
+    methods:{
+         login(){
+       User.login(this.form)
+         }
     }
 }
 </script>
 <style>
 
 </style>
+
+
+
