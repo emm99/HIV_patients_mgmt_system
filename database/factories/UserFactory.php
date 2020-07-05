@@ -2,6 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Role;
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
@@ -19,6 +20,9 @@ use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
+        'role_id'=> function (){
+            return Role::all()->random();
+        },
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),

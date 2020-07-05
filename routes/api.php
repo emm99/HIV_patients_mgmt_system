@@ -1,6 +1,11 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
+
+Route::apiResource('/staff','StaffController');
+Route::post('/create-reminder', 'ReminderController@create')->name('add-reminder');
+
+
 Route::group([
 
     'middleware'=>'api',

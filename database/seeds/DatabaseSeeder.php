@@ -1,5 +1,7 @@
 <?php
 
+use App\Model\Patient;
+use App\Role;
 use Illuminate\Database\Seeder;
 use App\User;
 
@@ -12,6 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-      factory(User::class,10)->create();
+        factory(Role::class,6)->create();
+      factory(User::class,6)->create();
+      factory(Patient::class,15)->create();
     }
 }

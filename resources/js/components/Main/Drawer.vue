@@ -4,7 +4,20 @@
     <v-navigation-drawer
       v-model="drawer"
       app>
-      <v-list>
+       <v-toolbar
+       color="indigo"
+      dark>
+            <v-btn icon class="hidden-xs-only">
+            <v-icon>mdi-hospital-building</v-icon>
+            </v-btn>
+
+            <v-toolbar-title>HPMS</v-toolbar-title>
+
+            <v-spacer></v-spacer>
+
+          </v-toolbar>
+
+      <v-list >
           <v-list-group
            color="warning"
           dark
@@ -15,29 +28,36 @@
              <v-list-item-title>Patients</v-list-item-title>
             </template>
 
+
              <v-list-item
             v-for="(patient, index) in patients"
             :key="index"
-             @click=""
+            :to="patient.to"
+
               >
             <v-list-item-title>{{patient.title}}</v-list-item-title>
             <v-list-item-icon>
               <v-icon>{{patient.icon}}</v-icon>
             </v-list-item-icon>
           </v-list-item>
+
+
           </v-list-group>
 
+
          <v-list-item
-          color="warning"
+
             v-for="(report, index) in reports"
             :key="index"
-             @click=""
+            :to="report.to"
               >
               <v-list-item-icon>
               <v-icon>{{report.icon}}</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>{{report.title}}</v-list-item-title>
+            <v-list-item-title >{{report.title}}</v-list-item-title>
          </v-list-item>
+
+
 
          <v-list-group
           color="warning"
@@ -52,7 +72,7 @@
              <v-list-item
             v-for="(staff, index) in staffs"
             :key="index"
-             @click=""
+            :to="staff.to"
               >
             <v-list-item-title>{{staff.title}}</v-list-item-title>
              <v-list-item-icon>
@@ -74,7 +94,7 @@
              <v-list-item
             v-for="(chart, index) in charts"
             :key="index"
-             @click=""
+
               >
             <v-list-item-title>{{chart.title}}</v-list-item-title>
             <v-list-item-icon>
@@ -94,7 +114,7 @@
       dark
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>Application  </v-toolbar-title>
+      <v-toolbar-title>Dashboard</v-toolbar-title>
       <v-spacer></v-spacer>
 
   <v-menu offset-y>
@@ -114,7 +134,7 @@
           v-for="(item, index) in items"
           :key="index"
           :to="item.to"
-          @click=""
+
         >
         <!-- <router-link> -->
           <v-list-item-title>{{ item.title }}</v-list-item-title>
@@ -139,16 +159,16 @@ export default {
         { title: 'Logout',to:'/logout' },
       ],
       patients: [
-        {title:'View Patients',icon:'mdi-seat-individual-suite'},
-        {title:'Add New Patient',icon:'mdi-account-plus'},
-        {title:'Patient Notifications',icon:'mdi-bell-ring'}
+        {title:'View Patients',icon:'mdi-seat-individual-suite', to:'/main/patients'},
+        {title:'Add New Patient',icon:'mdi-account-plus',to:'/main/newpatient'},
+        {title:'Patient Remainders',icon:'mdi-bell-ring',to:'/main/create_reminder'}
       ],
       reports: [
-          {title:'Reports',icon:'mdi-chart-bar' }
+          {title:'Reports',icon:'mdi-chart-bar',to:'/main/reports' }
       ],
       staffs: [
-          {title:'View Staffs',icon:'mdi-account-tie'},
-          {title:'Add New Staff',icon:'mdi-account-plus'}
+          {title:'View Staffs',icon:'mdi-account-tie',to:'/main/staffs'},
+          {title:'Add New Staff',icon:'mdi-account-plus',to:'/main/newstaff'}
       ],
       charts: [
           {title:'View Chats',icon:'mdi-message-bulleted'},
@@ -160,7 +180,8 @@ export default {
       EventBus.$on('logout', () => {
         User.logout()
       })
-    }
+    },
+
     }
 
 

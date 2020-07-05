@@ -10,7 +10,7 @@
  import vfooter from './Footer'
 
 export default {
-  components:{vfooter}
+  components:{vfooter,toolbar}
 }
 </script>
 

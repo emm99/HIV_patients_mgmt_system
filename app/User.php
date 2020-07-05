@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Model\Patient;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -17,7 +18,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','role_id'
     ];
 
     /**
@@ -39,37 +40,43 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     public function roles(){
-        return $this->belongsToMany(Roles::class,'users_roles');
+        return $this->belongsTo(Roles::class);
     }
 
-    public function hasRole(...$roles){
-        return $this->roles()->whereIn('slug',$roles)->count();
-     }
+    // public function roles(){
+    //     return $this->belongsToMany(Roles::class,'users_roles');
+    // }
 
-    public function hasPermissionTo(...$permissions){
-         return $this->permissions()->whereIn('slug',$permissions)->count() ||
-         $this->roles()->whereHas('permissions',function ($q) use ($permissions) {
-             $q->whereIn('slug',$permissions);
-         })->count();
-     }
+    // public function hasRole(...$roles){
+    //     return $this->roles()->whereIn('slug',$roles)->count();
+    //  }
 
-    public function givePermissionsTo(...$permissions){
-       $this->permissions()->attach($permissions);
+    // public function hasPermissionTo(...$permissions){
+    //      return $this->permissions()->whereIn('slug',$permissions)->count() ||
+    //      $this->roles()->whereHas('permissions',function ($q) use ($permissions) {
+    //          $q->whereIn('slug',$permissions);
+    //      })->count();
+    //  }
+
+    // public function givePermissionsTo(...$permissions){
+    //    $this->permissions()->attach($permissions);
+    // }
+
+    // public function setPermissionsTo(...$permissions){
+    //     $this->permissions()->sync($permissions);
+    //  }
+
+    //  public function detachPermissionsTo(...$permissions){
+    //     $this->permissions()->detach($permissions);
+    //  }
+
+    // public function permissions(){
+    //     return $this->belongsToMany(Permission::class,'users_permissions');
+    // }
+
+    public function patient(){
+        return $this->hasMany(Patient::class);
     }
-
-    public function setPermissionsTo(...$permissions){
-        $this->permissions()->sync($permissions);
-     }
-
-     public function detachPermissionsTo(...$permissions){
-        $this->permissions()->detach($permissions);
-     }
-
-    public function permissions(){
-        return $this->belongsToMany(Permission::class,'users_permissions');
-    }
-
-
       // Rest omitted for brevity
 
     /**

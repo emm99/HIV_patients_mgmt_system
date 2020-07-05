@@ -36,7 +36,7 @@ class AuthController extends Controller
     public function signup(Request $request){
 
       User::create($request->all());
-      return $this->login($request);
+    //   return $this->login($request);
     }
 
     /**
@@ -87,4 +87,6 @@ class AuthController extends Controller
             'user' => auth()->user()->name
         ]);
     }
+
+
 }

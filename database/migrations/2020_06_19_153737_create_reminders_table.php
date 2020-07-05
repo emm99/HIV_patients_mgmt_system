@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePermissionsTable extends Migration
+class CreateRemindersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreatePermissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('permissions', function (Blueprint $table) {
-            $table->id()->unsigned();
-            $table->string('slug');
-            $table->string('name');
+        Schema::create('reminders', function (Blueprint $table) {
+            $table->id();
+            $table->integer('patient_id')->unsigned();
+            $table->string('mobile_no');
+            $table->string('timezoneoffset');
+            $table->text('message');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreatePermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('reminders');
     }
 }
