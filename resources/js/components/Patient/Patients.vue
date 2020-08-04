@@ -1,133 +1,152 @@
 <template>
 <v-content>
+<v-row
+justify="space-around"
+align="start"
+>
+    <v-col cols="8">
+  <v-card
+  style="margin-top: -170px; margin-left: 40px; margin-right: 60px;">
+      <v-card-title
+       style="margin-left: 50px; margin-top: 10px; margin-bottom: 0px;"
+      >Search For A Patient</v-card-title>
       <v-container>
-  <v-card>
-    <v-card-title>
-      Patients
-      <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
-    </v-card-title>
-    <v-data-table
-      :headers="headers"
-      :items="desserts"
-      :search="search"
-    ></v-data-table>
+     <v-form @submit="search"
+    ref="form"
+    v-model="valid"
+    lazy-validation
+ style="margin-top: 0px; margin-left: 50px; margin-right: 50px;"
+  >
+    <v-text-field
+      v-model="id"
+      :counter="10"
+      :rules="nameRules"
+      label="Patient Id"
+      required
+    ></v-text-field>
+
+
+    <v-checkbox
+      v-model="checkbox"
+      :rules="[v => !!v || 'You must agree to continue!']"
+      label="Do you agree?"
+      required
+    ></v-checkbox>
+
+    <v-btn
+      :disabled="!valid"
+      color="success"
+      class="mr-4"
+      @click="search(id)"
+    >
+      Submit
+    </v-btn>
+
+    <v-btn
+      color="error"
+      class="mr-4"
+      @click="reset"
+    >
+      Reset Form
+    </v-btn>
+
+   </v-form>
+   </v-container>
   </v-card>
-      </v-container>
-</v-content>
+
+    </v-col>
+    <v-col cols=""
+    style="margin-right: 20px;margin-top: -170px;"
+    >
+        <v-card>
+            <v-card-title>Important Information</v-card-title>
+            <v-divider></v-divider>
+            <v-card-subtitle>Things to consider when registering staffs</v-card-subtitle>
+            <v-card-text>1.eknkbdkbgbjkgbkjbkjvbzkjvkjb</v-card-text>
+            <v-card-text>2.eknkbdkbgbjkgbkjbkjvbzkjvkjb</v-card-text>
+            <v-card-text>3.eknkbdkbgbjkgbkjbkjvbzkjvkjb</v-card-text>
+            <v-card-text>4.eknkbdkbgbjkgbkjbkjvbzkjvkjb</v-card-text>
+            <v-card-text>5.eknkbdkbgbjkgbkjbkjvbzkjvkjb</v-card-text>
+                            <v-divider></v-divider>
+          <v-spacer></v-spacer>
+           <v-card-text>Important Information</v-card-text>
+        </v-card>
+    </v-col>
+</v-row>
+
+
+   <v-dialog v-model="dialog" max-width="500px">
+          <v-card>
+            <v-card-title>
+              <span class="headline">ENTER PATIENT OTP</span>
+            </v-card-title>
+
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="6" md="8">
+                    <v-card-subtitle>Patient No: {{ this.id }}</v-card-subtitle>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="8">
+                    <v-text-field  label="Enter OTP"></v-text-field>
+                  </v-col>
+
+                </v-row>
+              </v-container>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" @click="close" text>Cancel</v-btn>
+              <v-btn color="blue darken-1" text>SUBMIT</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+
+  </v-content>
 </template>
-
-
 <script>
 export default {
-     props: {
-      source: String,
-    },
-     data () {
-      return {
-        search: '',
-        headers: [
-          {
-            text: 'Food Recommended (100g serving)',
-            align: 'start',
-            sortable: false,
-            value: 'name',
-          },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' },
-        ],
-        desserts: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%',
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%',
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%',
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: '8%',
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: '16%',
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: '0%',
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: '2%',
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: '45%',
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%',
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%',
-          },
-        ],
-      }
+ data: () => ({
+     dialog:false,
+      valid: true,
+      id: '',
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+      ],
+      select: null,
+      checkbox: false,
+
+    }),
+    created(){
+    this.$on('available',() =>{
+           this.dialog=true;
+       })
+    }
+,
+    methods: {
+      search () {
+        axios.get(`api/patient/${this.id}`)
+        .then(()=>{
+            res=>this.patient = res.data.data;
+            this.$emit('available');
+            })
+         .catch(error => alert(error.response.data.message))
+      },
+      reset () {
+        this.$refs.form.reset()
+      },
+      close () {
+        this.dialog = false
+        },
+      resetValidation () {
+        this.$refs.form.resetValidation()
+      },
     },
 }
 </script>
+<style>
+
+</style>

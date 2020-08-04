@@ -15,17 +15,16 @@ class CreatePatientsTable extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
            $table->id();
-           $table->string('First_Name');
-           $table->string('Last_Name');
-           $table->string('Gender');
-           $table->integer('Age');
+           $table->string('first_name');
+           $table->string('last_name');
            $table->date('DOB');
-           $table->string('Marital_Status');
-           $table->integer('Phone_no');
-           $table->integer('Relative_phone_no');
-           $table->string('District');
-           $table->string('Region');
+           $table->string('sex');
+           $table->string('marital_status');
+           $table->string('phone_no');
+           $table->string('location_address');
+           $table->bigInteger('dependency_id')->unsigned();
            $table->timestamps();
+           $table->foreign('dependency_id')->references('id')->on('dependencies')->onDelete('cascade');
         });
     }
 

@@ -6,6 +6,7 @@
   >
     <v-row
       justify="center"
+      align="end"
       no-gutters
     >
 

@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PatientResource;
 use App\Model\Patient;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['index','show']]);
+    }
+     // protected $fillable = ['name','email','password'];
+     protected $guarded = [];
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,8 @@ class PatientController extends Controller
      */
     public function index()
     {
-        //
+
+         return PatientResource::collection(Patient::latest()->get());
     }
 
     /**
@@ -35,7 +43,8 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Patient::create($request->all());
+        return response('created');
     }
 
     /**
@@ -46,7 +55,7 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        //
+        return new PatientResource($patient);
     }
 
     /**
@@ -69,7 +78,8 @@ class PatientController extends Controller
      */
     public function update(Request $request, Patient $patient)
     {
-        //
+       $patient->update($request->all());
+       return response('updated');
     }
 
     /**
@@ -80,6 +90,7 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        //
+       $patient->delete();
+       return response('Deleted',200);
     }
 }

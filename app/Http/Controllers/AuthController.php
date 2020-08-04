@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\User as AuthUser;
 
 class AuthController extends Controller
 {
@@ -14,8 +17,9 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('JWT', ['except' => ['login','signup']]);
+        $this->middleware('auth:api', ['except' => ['login','signup','destroy']]);
     }
+    protected $guarded = [];
 
     /**
      * Get a JWT via given credentials.
@@ -26,17 +30,19 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
+
+
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Unauthorized Access: Check your Credentials'], 401);
         }
 
-        return $this->respondWithToken($token);
+        return
+               $this->respondWithToken($token);
     }
 
     public function signup(Request $request){
-
       User::create($request->all());
-    //   return $this->login($request);
+          return response('created',200);
     }
 
     /**
@@ -68,7 +74,7 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken(auth('api')->refresh());
     }
 
     /**
@@ -83,10 +89,17 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user()->name
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
+            'user' => auth()->user()->name,
+
         ]);
     }
 
+    public function destroy($id)
+    {
 
+            $user= User::findOrFail($id);
+            $user->delete();
+            return response('Deleted Successful', 200);
+    }
 }

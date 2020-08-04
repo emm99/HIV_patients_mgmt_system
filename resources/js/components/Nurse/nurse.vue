@@ -14,10 +14,12 @@ import vcontent from './Content'
 export default {
 
      created(){
-        if(!User.loggedIn()){
+        if(!(User.loggedIn() && User.role()=="4")){
 
        this.$router.push({name:'login'})
-        }},
+
+        }
+        },
     components:{ vdrawer, vcontent},
 
 }

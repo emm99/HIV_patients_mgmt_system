@@ -2,22 +2,23 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Model\Dependency;
 use App\Model\Patient;
 use Faker\Generator as Faker;
 
 
 $factory->define(Patient::class, function (Faker $faker) {
     return [
-         'First_Name'=>$faker->name,
-         'Last_Name'=>$faker->name,
-         'Gender'=>$faker->name,
-         'Age'=>$faker->randomDigit,
-         'DOB'=>$faker->date('Y-m-d'),
-         'Marital_Status'=>$faker->name,
-         'Phone_no'=>$faker->phoneNumber,
-         'Relative_phone_no'=>$faker->phoneNumber,
-         'District'=>$faker->city,
-         'Region'=>$faker->state,
+         'first_name'=>$faker->firstName,
+         'last_name'=>$faker->lastName,
+         'DOB'=>$faker->dateTimeBetween('-50 years', '-10 years')->format('Y-m-d'),
+         'sex'=>$faker->word,
+         'marital_status'=>$faker->word,
+         'phone_no'=>$faker->e164PhoneNumber ,
+         'location_address'=>$faker->streetAddress,
+         'dependency_id'=>function(){
+             return Dependency::all()->random();
+         },
 
     ];
 });

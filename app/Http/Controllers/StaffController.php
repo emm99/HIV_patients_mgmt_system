@@ -8,7 +8,11 @@ use Illuminate\Http\Request;
 
 class StaffController extends Controller
 {
-    // protected $fillable = ['name','email','password'];
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['index','show']]);
+    }
+
     protected $guarded = [];
     /**
      * Display a listing of the resource.
@@ -39,7 +43,7 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         User::create($request->all());
-        return response('created');
+        return response('created',201);
     }
 
     /**
@@ -48,9 +52,9 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $user,$id)
     {
-        return new StaffResource($user);
+        return new StaffResource($user->find($id));
     }
 
     /**
@@ -71,7 +75,7 @@ class StaffController extends Controller
     public function update(Request $request,User $user)
     {
         $user->update($request->all());
-        return request('Updated');
+        return response('Updated');
     }
 
     /**

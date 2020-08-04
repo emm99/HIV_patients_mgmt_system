@@ -15,9 +15,15 @@ class StaffResource extends JsonResource
     public function toArray($request)
     {
          return[
-            'Staffname'=>$this->name,
+             'id'=>$this->id,
+            'name'=>$this->name,
+            'position'=>$this->role->name,
+            'username'=>$this->user_name,
+            'health_facility'=>$this->health_facility->name,
+            'location_id'=>$this->health_facility->id,
             'email'=>$this->email,
-            'Position'=>$this->role->name,
+            'district'=>$this->health_facility->district->name,
+            'region'=>$this->health_facility->district->region->name,
             'created_at'=>$this->created_at->diffForHumans(),
          ];
          //parent::toArray($request);

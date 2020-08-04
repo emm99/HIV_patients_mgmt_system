@@ -1,23 +1,41 @@
 
 <template v-slot:activator="{ on, attrs }">
-<div>
+<div class="ma-12 pa-12">
+    <template>
+        <v-card>
     <v-navigation-drawer
+      permanent
+      expand-on-hover
       v-model="drawer"
       app>
-       <v-toolbar
-       color="indigo"
-      dark>
-            <v-btn icon class="hidden-xs-only">
-            <v-icon>mdi-hospital-building</v-icon>
-            </v-btn>
+        <v-list>
+        <v-list-item>
+           <v-list-item>
+               <v-list-item-icon>
+                <v-icon>mdi-hospital-building</v-icon>
+               </v-list-item-icon>
+                <v-list-item-title>HPMS</v-list-item-title>
+              </v-list-item>
+        </v-list-item>
+                      <v-divider></v-divider>
+          </v-list>
 
-            <v-toolbar-title>HPMS</v-toolbar-title>
+      <v-list
+      nav
+      dense
+       >
+          <v-list-item
+            v-for="(dashboard, index) in dashboards"
+            :key="index"
+            :to="dashboard.to"
+              >
+              <v-list-item-icon>
+              <v-icon>{{dashboard.icon}}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title >DASHBOARD</v-list-item-title>
+         </v-list-item>
 
-            <v-spacer></v-spacer>
 
-          </v-toolbar>
-
-      <v-list >
           <v-list-group
            color="warning"
           dark
@@ -46,7 +64,6 @@
 
 
          <v-list-item
-
             v-for="(report, index) in reports"
             :key="index"
             :to="report.to"
@@ -66,46 +83,24 @@
           no-action
           >
            <template v-slot:activator>
-             <v-list-item-title>Staffs</v-list-item-title>
+             <v-list-item-title>Consultation</v-list-item-title>
             </template>
 
              <v-list-item
-            v-for="(staff, index) in staffs"
+            v-for="(consultation, index) in consultations"
             :key="index"
-            :to="staff.to"
+            :to="consultation.to"
               >
-            <v-list-item-title>{{staff.title}}</v-list-item-title>
+            <v-list-item-title>{{consultation.title}}</v-list-item-title>
              <v-list-item-icon>
-              <v-icon>{{staff.icon}}</v-icon>
+              <v-icon>{{consultation.icon}}</v-icon>
              </v-list-item-icon>
            </v-list-item>
           </v-list-group>
-
-           <v-list-group
-            color="warning"
-          dark
-          prepend-icon="mdi-bulletin-board"
-          no-action
-          >
-           <template v-slot:activator>
-             <v-list-item-title>Notice Board</v-list-item-title>
-            </template>
-
-             <v-list-item
-            v-for="(chart, index) in charts"
-            :key="index"
-
-              >
-            <v-list-item-title>{{chart.title}}</v-list-item-title>
-            <v-list-item-icon>
-              <v-icon>{{chart.icon}}</v-icon>
-            </v-list-item-icon>
-          </v-list-item>
-          </v-list-group>
-      </v-list>
-
+  </v-list>
     </v-navigation-drawer>
-
+    </v-card>
+    </template>
 
 
     <v-app-bar
@@ -113,8 +108,8 @@
       color="indigo"
       dark
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>Dashboard</v-toolbar-title>
+      <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
+      <v-toolbar-title>Doctor's Dashboard</v-toolbar-title>
       <v-spacer></v-spacer>
 
   <v-menu offset-y>
@@ -159,22 +154,18 @@ export default {
         { title: 'Logout',to:'/logout' },
       ],
       patients: [
-        {title:'View Patients',icon:'mdi-seat-individual-suite', to:'/main/patients'},
-        {title:'Add New Patient',icon:'mdi-account-plus',to:'/main/newpatient'},
-        {title:'Patient Remainders',icon:'mdi-bell-ring',to:'/main/create_reminder'}
+        {title:'View Patient',icon:'mdi-seat-individual-suite', to:'/doctor/viewpatient/'},
+      ],
+      consultations: [
+        {title:'New Consultation',icon:'mdi-account-plus',to:'/doctor/newconsultation'},
+        // {title:'View Consultation',icon:'mdi-account-tie',to:'/doctor/viewconsultation'}
       ],
       reports: [
-          {title:'Reports',icon:'mdi-chart-bar',to:'/main/reports' }
+          {title:'Reports',icon:'mdi-chart-bar',to:'/doctor/reports' }
       ],
-      staffs: [
-          {title:'View Staffs',icon:'mdi-account-tie',to:'/main/staffs'},
-          {title:'Add New Staff',icon:'mdi-account-plus',to:'/main/newstaff'}
-      ],
-      charts: [
-          {title:'View Chats',icon:'mdi-message-bulleted'},
-          {title:'create chart',icon:'mdi-message-draw'}
-      ]
-
+     dashboards: [
+          {icon:'mdi-view-dashboard',to:'/admin/dashboard' }
+       ]
     }),
     created(){
       EventBus.$on('logout', () => {

@@ -1,55 +1,98 @@
 <template>
 <v-content>
-
+<v-col>
+<v-row
+justify="space-around"
+>
+    <v-col
+    >
   <v-card
-  style="margin-top: 10px; margin-left: 50px; margin-right: 50px;">
+  style="margin-top: -178px; margin-left: 40px; margin-right: 60px;"
+  >
       <v-card-title
        style="margin-left: 50px; margin-top: 10px; margin-bottom: 0px;"
       >Create New Staff</v-card-title>
+      <v-divider></v-divider>
       <v-container>
-     <v-form
+
+     <v-form @submit="create"
     ref="form"
     v-model="valid"
     lazy-validation
  style="margin-top: 0px; margin-left: 50px; margin-right: 50px;"
   >
+   <v-row>
+   <v-col
+         cols="12"
+         md="6"
+         >
     <v-text-field
-      v-model="name"
-      :counter="10"
+      v-model="form.name"
+      :counter="30"
       :rules="nameRules"
       label="Name"
       required
     ></v-text-field>
 
-    <v-text-field
-      v-model="email"
-      :rules="emailRules"
+    <v-autocomplete
+      v-model="form.health_facility_id"
+      :items="health_facility"
+      :rules="[v => !!v || 'Health Facility is required']"
+      label="Health_facility"
+      item-text="name"
+      item-value="id"
+    ></v-autocomplete>
+
+   <v-text-field
+      v-model="form.email"
+      :rules="nameRules"
       label="E-mail"
       required
     ></v-text-field>
 
-    <v-select
-      v-model="select"
-      :items="items"
-      :rules="[v => !!v || 'Item is required']"
-      label="Item"
+    </v-col>
+     <v-col
+         cols="12"
+         md="6"
+         >
+     <v-text-field
+      v-model="form.user_name"
+      :counter="30"
+      :rules="nameRules"
+      label="Username"
       required
-    ></v-select>
+    ></v-text-field>
 
-    <v-checkbox
-      v-model="checkbox"
-      :rules="[v => !!v || 'You must agree to continue!']"
-      label="Do you agree?"
+      <v-autocomplete
+      v-model="form.role_id"
+      :items="positions"
+      :rules="[v => !!v || 'Position is required']"
+      label="position"
+      item-text="name"
+      item-value="id"
+    ></v-autocomplete>
+
+<v-text-field
+          v-model="form.password"
+          hint="At least 5 characters"
+      :rules="passwordRules"
+      label="Password"
       required
-    ></v-checkbox>
+      ></v-text-field>
+    </v-col>
+    </v-row>
+
+    <v-col
+
+         >
 
     <v-btn
       :disabled="!valid"
       color="success"
       class="mr-4"
-      @click="validate"
+      @click="create"
     >
-      Validate
+      Create
     </v-btn>
 
     <v-btn
@@ -59,54 +102,103 @@
     >
       Reset Form
     </v-btn>
+    </v-col>
 
-    <v-btn
-      color="warning"
-      @click="resetValidation"
-    >
-      Reset Validation
-    </v-btn>
    </v-form>
-   </v-container>
-  </v-card>
 
+   </v-container>
+   </v-card >
+    </v-col>
+
+
+        <v-card
+           max-width="300"
+           style="margin-top: -160px; margin-right: 30px;"
+
+        >
+            <v-card-title>Important Information</v-card-title>
+            <v-divider></v-divider>
+            <v-card-subtitle>Things to consider when registering staffs</v-card-subtitle>
+            <v-card-text>1.eknkbdkbgbjkgbkjbkjvbzkjvkjb</v-card-text>
+            <v-card-text>2.eknkbdkbgbjkgbkjbkjvbzkjvkjb</v-card-text>
+            <v-card-text>3.eknkbdkbgbjkgbkjbkjvbzkjvkjb</v-card-text>
+            <v-card-text>4.eknkbdkbgbjkgbkjbkjvbzkjvkjb</v-card-text>
+            <v-card-text>5.eknkbdkbgbjkgbkjbkjvbzkjvkjb</v-card-text>
+                            <v-divider></v-divider>
+          <v-spacer></v-spacer>
+           <v-card-text>Important Information</v-card-text>
+        </v-card>
+     </v-row>
+</v-col>
   </v-content>
 </template>
 <script>
 export default {
- data: () => ({
+ data() {
+return{
       valid: true,
-      name: '',
+
       nameRules: [
         v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+        v => (v && v.length <= 30) || 'Name must be less than 30 characters',
       ],
-      email: '',
+        name: '',
+
+      userNameRules: [
+        v => !!v || 'Username is required',
+        v => (v && v.length <= 30) || 'Username must be less than 30 characters',
+      ],
+
       emailRules: [
         v => !!v || 'E-mail is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+
       ],
-      select: null,
-      items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
+
+      passwordRules: [
+        v => !!v || 'Password is required',
+        v => (v && v.length >= 5) || 'Password must be more than 5 characters',
       ],
-      checkbox: false,
-    }),
+
+      form:{
+          name:null,
+          health_facility_id:null,
+          email:null,
+          user_name:null,
+          role_id:null,
+          password:null,
+      },
+      health_facility:{},
+     positions:{}
+    }
+
+    },
+    created(){
+      this.loadStaff(User.healthFacility());
+    },
 
     methods: {
-      validate () {
-        this.$refs.form.validate()
-      },
       reset () {
         this.$refs.form.reset()
       },
-      resetValidation () {
-        this.$refs.form.resetValidation()
+      create(){
+        axios.post('api/auth/signup',this.form)
+        .then(()=>{
+            this.reset();
+            alert('Created Successful');
+        })
+        .catch(error => console.log(error.response.data))
       },
-    },
+      loadStaff(id){
+         axios.all([
+                    axios.get(`/api/health_facility/${id}`)
+                   .then(res => this.health_facility =res.data.data),
+                   axios.get('/api/role')
+                   .then(res=>this.positions = res.data.data)
+                 ])
+      }
+
+    }
 }
 </script>
 <style>

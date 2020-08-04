@@ -2,7 +2,12 @@
 
 namespace App;
 
+use App\Model\Clinic_info;
+use App\Model\Consultation;
+use App\Model\Health_facility;
+use App\Model\LabTest;
 use App\Model\Patient;
+use App\Model\Pharmacy;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,7 +23,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','role_id'
+        'name','email','user_name', 'password','role_id','health_facility_id'
     ];
 
     /**
@@ -39,45 +44,18 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles(){
-        return $this->belongsTo(Roles::class);
+    public function role(){
+        return $this->belongsTo(Role::class,'role_id','id');
     }
 
-    // public function roles(){
-    //     return $this->belongsToMany(Roles::class,'users_roles');
-    // }
-
-    // public function hasRole(...$roles){
-    //     return $this->roles()->whereIn('slug',$roles)->count();
-    //  }
-
-    // public function hasPermissionTo(...$permissions){
-    //      return $this->permissions()->whereIn('slug',$permissions)->count() ||
-    //      $this->roles()->whereHas('permissions',function ($q) use ($permissions) {
-    //          $q->whereIn('slug',$permissions);
-    //      })->count();
-    //  }
-
-    // public function givePermissionsTo(...$permissions){
-    //    $this->permissions()->attach($permissions);
-    // }
-
-    // public function setPermissionsTo(...$permissions){
-    //     $this->permissions()->sync($permissions);
-    //  }
-
-    //  public function detachPermissionsTo(...$permissions){
-    //     $this->permissions()->detach($permissions);
-    //  }
-
-    // public function permissions(){
-    //     return $this->belongsToMany(Permission::class,'users_permissions');
-    // }
-
-    public function patient(){
-        return $this->hasMany(Patient::class);
+    public function consultation(){
+        return $this->hasMany(Consultation::class);
     }
-      // Rest omitted for brevity
+
+    public function health_facility(){
+        return $this->belongsTo(Health_facility::class);
+    }
+
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
@@ -96,7 +74,10 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return  [
+            'role'=>$this->role_id,
+            'location_id'=>$this->health_facility_id,
+        ];
     }
 
    public function setPasswordAttribute($value){
