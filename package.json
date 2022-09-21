@@ -25,6 +25,6 @@
         "vue-material": "^1.0.0-beta-11",
         "vue-router": "^3.1.5",
         "vue-simple-alert": "^1.1.1",
-        "vuetify": "^2.2.18"
+        "vuetify": "^2.6.10"
     }
 }
